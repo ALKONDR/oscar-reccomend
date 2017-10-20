@@ -1,0 +1,22 @@
+{
+  "name": "oscar-reccomend",
+  "version": "1.0.0",
+  "description": "service for product recommendation",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ALKONDR/oscar-reccomend.git"
+  },
+  "author": "alkondr",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ALKONDR/oscar-reccomend/issues"
+  },
+  "homepage": "https://github.com/ALKONDR/oscar-reccomend#readme",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
