@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 
 app.get('/', function (req, res) {
-    res.send('this is my fake data');
+    res.send('id: ' + req.query.id);
 });
 
 app.listen(8080, function () {
