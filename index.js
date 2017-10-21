@@ -1,20 +1,37 @@
 const express = require('express');
-var bodyParser = require("body-parser");
+const bodyParser = require("body-parser");
+
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.get('/', function(req, res) {
-    res.send('id: ' + req.query.id);
+app.get('/api', function(req, res) {
+    res.send(predict());
 });
 
-app.post('/transaction', function(req, res) {
+app.post('/api/transaction', function(req, res) {
     console.log(req.query.id);
     console.log(req.body);
+
+    predictions.push(JSON.parse(req.body));
+
     res.sendStatus(200);
 });
 
 app.listen(8080, function () {
     console.log('Fake app listening on port 8080!');
 });
+
+// const users = require('./generated_users');
+const db = require('./product_base');
+
+const predictions = [];
+
+function predict() {
+    return db.products[Math.floor(Math.random() * db.products.length)];
+}
+
+// function getUniqueCategories(userTransactions){
+//
+// }
