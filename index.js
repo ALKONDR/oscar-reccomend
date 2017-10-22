@@ -27,11 +27,12 @@ app.listen(8080, function () {
 const rwc = require('random-weighted-choice');
 
 const users = require('./all_users').users;
-const db = require('./product_base');
 const defaultUser = require('./default_user');
-defaultUser.transactions
 
-const predictions = [];
+const predictions = [{ product: 'Шок.батончик TWIX Extra 82г',
+    category: 'Батончики, шоколадные яйца, драже',
+    price: 45.5,
+    actualPrice: 40.11 }];
 
 function processsTransaction(transaction) {
     defaultUser.transactions.push(transaction);
@@ -53,7 +54,7 @@ function processsTransaction(transaction) {
     const productForUser = getProductForUser(ourUserProducts, closestUserProducts);
     console.log('productForUser', productForUser);
 
-    return productForUser;
+    predictions.push(productForUser);
 }
 
 function findClosest(userTransactions) {
