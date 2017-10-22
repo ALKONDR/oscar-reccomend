@@ -6,16 +6,22 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+app.use('/', express.static('/home/ec2-user/vkhack/vkhack/landing'));
+
 app.get('/api', function(req, res) {
     console.log('GET /api ', req.query);
 
-    res.send(predictions.pop() || "");
+    res.send(( sessions[req.query.id] || [] ).pop() || "");
 });
 
 app.post('/api/transaction', function(req, res) {
     console.log('POST /api/transaction', req.body);
 
-    processsTransaction(req.body);
+    if (!sessions[req.query.id]) {
+        sessions[req.query.id] = [ ...predictions ];
+    }
+
+    processsTransaction(req.body, req.query.id);
 
     res.sendStatus(200);
 });
@@ -34,7 +40,9 @@ const predictions = [{ product: 'Шок.батончик TWIX Extra 82г',
     price: 45.5,
     actualPrice: 40.11 }];
 
-function processsTransaction(transaction) {
+const sessions = {};
+
+function processsTransaction(transaction, id) {
     defaultUser.transactions.push(transaction);
 
     const ourUserTransactions = getLastTransactions(defaultUser.transactions);
@@ -54,7 +62,7 @@ function processsTransaction(transaction) {
     const productForUser = getProductForUser(ourUserProducts, closestUserProducts);
     console.log('productForUser', productForUser);
 
-    predictions.push(productForUser);
+    sessions[id].push(productForUser);
 }
 
 function findClosest(userTransactions) {
